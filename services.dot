@@ -1,0 +1,12 @@
+digraph G {
+  "Music Manager" -> "Music Information Service"
+  "Music Information Service" -> "Music Information Storage Manager"
+  "Music Information Storage Manager" -> "Redis DB"
+  "Metal Archives Wrapper" -> "metal-arvhives.org"
+  "Musicbrainz Wrapper" -> "Musicbrainz API"
+  "Musicbrainz Wrapper" -> "Redis DB"
+  "Redis DB" -> "Musicbrainz Wrapper"
+  "Music Information Service" -> "Redis DB"
+  "Metal Archives Wrapper" -> "Redis DB"
+  "Redis DB" -> "Metal Archives Wrapper"
+ }
