@@ -30,4 +30,5 @@ This service retrieves Artitst and Records from [MusicBrainz](https://musicbrain
 ## Service Intercomunication
 
 The following graph shows how microservices are communicated.
-![alt text](https://git.windmaker.net/musicmanager/Music-Collection-Manager-Docs/raw/services-schema/Service%20Graph/services.svg "Logo Title Text 1")
+
+![Graph](https://git.windmaker.net/musicmanager/Music-Collection-Manager-Docs/raw/master/Service%20Graph/services.svg)
