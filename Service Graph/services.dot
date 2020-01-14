@@ -3,7 +3,7 @@ digraph G {
   "Music Information Service" -> "Music Manager" [label="Returns\nrequired Info"]
   "Key/Value Storage" -> "Music Information Service" [label="Retrieve artist/record Info"]
   "Music Information Service" -> "Pub/Sub" [label="Send Job\nRetrieve info from main option"]
-  "Metal Archives Wrapper" -> "metal-arvhives.org" [label="Retrieve artist/record Info"]
+  "Metal Archives Wrapper" -> "metal-archives.org" [label="Retrieve artist/record Info"]
   "Musicbrainz Wrapper" -> "Musicbrainz API" [label="Retrieve artist/record Info"]
   "Musicbrainz Wrapper" -> "Key/Value Storage" [label="Store artist/record Info"]
   "Pub/Sub" -> "Musicbrainz Wrapper" [label="Process Job\nRetrieve info from second option"]
