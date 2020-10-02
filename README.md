@@ -26,14 +26,15 @@ Job_Manager -- Store pendent job ID --> Storage_Manager;
 Job_Manager -- Update finished job ID --> Storage_Manager;
 Storage_Manager -- Store job id with pending status --> JobStatusStore[(Job Status Store)];
 
-Job_Manager -- Look for info --> Metal_Archives_Wrapper[Metal archives wrapper];
+Job_Manager -- Send new job --> Job_Router[Job Router];
+Job_Router -- Route job --> Metal_Archives_Wrapper[Metal archives wrapper];
 Metal_Archives_Wrapper -- Retrieve info --> Metal_Archives((metal-archives));
-Metal_Archives_Wrapper -- Returns retrieved info if found --> Job_Manager;
-Job_Manager -- Not found at metal archives - Look for info --> Music_Brainz_Wrapper[Music Brainz wrapper];
+Metal_Archives_Wrapper -- Returns retrieved info--> Job_Router;
+Job_Router -- Not found at metal archives - Look for info --> Music_Brainz_Wrapper[Music Brainz wrapper];
 Music_Brainz_Wrapper -- Retrieve info --> Music_Brainz((musicbrainz));
-Music_Brainz_Wrapper -- Returns retrieved info if found --> Job_Manager;
-Job_Manager -- If artist requested, send jobs for all albums --> Job_Manager;
-Job_Manager -- Store retrieved info --> Storage_Manager;
+Music_Brainz_Wrapper -- Returns retrieved info --> Job_Router;
+Job_Router -- Job has finished  - Store retrieved info --> Storage_Manager[Storage Manager];
+Job_Manager -- If artist requested, create jobs for all albums --> Job_Router;
 Storage_Manager -- Store retrieved info --> MusicInfoStore[(Music Info Store)];
 ```
 
