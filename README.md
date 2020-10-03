@@ -16,15 +16,16 @@ The following graph shows how microservices are communicated.
 graph TD;
 User -- Asks for an artist, album or pendent job --> Request_Manager[Request Manager];
 Request_Manager -- Returns requested info or pending job ID --> User;
-Request_Manager -- Asks for requested info of job id --> Storage_Manager[Storage Manager];
-Storage_Manager -- Check For Requested Info --> MusicInfoStore[(Music Info Store)];
-Storage_Manager -- If info not found, check pending jobs --> MusicInfoStore[(Music Info Store)];
+Request_Manager -- Request info if job has finished --> Storage_Manager[Storage Manager];
+Request_Manager -- Asks for job satus --> Status_Manager[Status Manager];
+Storage_Manager -- Check for requested info --> MusicInfoStore[(Music Info Store)];
 
-Storage_Manager-- Returns Info If Found --> Request_Manager;
-Request_Manager -- No info found, create a job --> Job_Manager[Job Manager];
-Job_Manager -- Store pendent job ID --> Storage_Manager;
-Job_Manager -- Update finished job ID --> Storage_Manager;
-Storage_Manager -- Store job id with pending status --> JobStatusStore[(Job Status Store)];
+Storage_Manager-- Returns info --> Request_Manager;
+Request_Manager -- No job found, create a job --> Job_Manager[Job Manager];
+Job_Manager -- Store pendent job ID --> Status_Manager;
+Status_Manager -- Store job ID with pending status --> JobStatusStore[(Job Status Store)];
+Status_Manager -- Update job with finished status --> JobStatusStore[(Job Status Store)];
+Status_Manager -- Check job status --> JobStatusStore[(Job Status Store)];
 
 Job_Manager -- Send new job --> Job_Router[Job Router];
 Job_Router -- Route job --> Metal_Archives_Wrapper[Metal archives wrapper];
@@ -33,8 +34,7 @@ Metal_Archives_Wrapper -- Returns retrieved info--> Job_Router;
 Job_Router -- Not found at metal archives - Look for info --> Music_Brainz_Wrapper[Music Brainz wrapper];
 Music_Brainz_Wrapper -- Retrieve info --> Music_Brainz((musicbrainz));
 Music_Brainz_Wrapper -- Returns retrieved info --> Job_Router;
-Job_Router -- Job has finished  - Store retrieved info --> Storage_Manager[Storage Manager];
-Job_Manager -- If artist requested, create jobs for all albums --> Job_Router;
+Job_Router -- Job has finished  - Send retrieved info to be stored --> Storage_Manager[Storage Manager];
 Storage_Manager -- Store retrieved info --> MusicInfoStore[(Music Info Store)];
 ```
 
