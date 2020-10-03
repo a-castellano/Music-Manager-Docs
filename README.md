@@ -16,16 +16,16 @@ The following graph shows how microservices are communicated.
 graph TD;
 User -- Asks for an artist, album or pendent job --> Request_Manager[Request Manager];
 Request_Manager -- Returns requested info or pending job ID --> User;
-Request_Manager -- Request info if job has finished --> Storage_Manager[Storage Manager];
-Request_Manager -- Asks for job satus --> Status_Manager[Status Manager];
-Storage_Manager -- Check for requested info --> MusicInfoStore[(Music Info Store)];
+Request_Manager -- Request info if job has finished --> Storage_Wrapper[Storage Wrapper];
+Request_Manager -- Asks for job satus --> Status_Wraper[Status Manager];
+Storage_Wrapper -- Check for requested info --> MusicInfoStore[(Music Info Store)];
 
-Storage_Manager-- Returns info --> Request_Manager;
+Storage_Wrapper[Storege Wrapper] -- Returns info --> Request_Manager;
 Request_Manager -- No job found, create a job --> Job_Manager[Job Manager];
 Job_Manager -- Store pendent job ID --> Status_Manager;
 Status_Manager -- Store job ID with pending status --> JobStatusStore[(Job Status Store)];
 Status_Manager -- Update job with finished status --> JobStatusStore[(Job Status Store)];
-Status_Manager -- Check job status --> JobStatusStore[(Job Status Store)];
+Status_Wraper[Status Wraper] -- Check job status --> JobStatusStore[(Job Status Store)];
 
 Job_Manager -- Send new job --> Job_Router[Job Router];
 Job_Router -- Route job --> Metal_Archives_Wrapper[Metal archives wrapper];
@@ -35,7 +35,8 @@ Job_Router -- Not found at metal archives - Look for info --> Music_Brainz_Wrapp
 Music_Brainz_Wrapper -- Retrieve info --> Music_Brainz((musicbrainz));
 Music_Brainz_Wrapper -- Returns retrieved info --> Job_Router;
 Job_Router -- Job has finished  - Send retrieved info to be stored --> Storage_Manager[Storage Manager];
-Storage_Manager -- Store retrieved info --> MusicInfoStore[(Music Info Store)];
+Job_Router -- Job has finished  - Send job final status to be stored --> Status_Manager[Status Manager];
+Storage_Manager[Storage Manager] -- Store retrieved info --> MusicInfoStore[(Music Info Store)];
 ```
 
 ## Services
@@ -51,22 +52,6 @@ Functions:
 * Retrieve Required info.
 * If required info was not found, a job with info retrieval request is requested to **Job Manager**.
 
-### Metal Archives Wrapper
-
-[Repo](https://git.windmaker.net/musicmanager/metal-archives-wrapper)
-
-This service retrieves Artists and Records info from [Metal Archives](https://www.metal-archives.com/)
-
-With or without info, state is returned to **Job Manager**.
-
-### Musicbrainz Wrapper
-
-[Repo](https://git.windmaker.net/musicmanager/Musicbrainz-Wrapper)
-
-This service retrieves Artists and Records from [MusicBrainz](https://musicbrainz.org/)
-
-With or without info, state is returned to **Job Manager**.
-
 ### Job Manager
 
 [Repo](https://git.windmaker.net/musicmanager/Job-Manager)
@@ -74,10 +59,33 @@ With or without info, state is returned to **Job Manager**.
 This service manages job traffic.
 
 Functions:
-* Creates jobs for retrieving Artists and records info.
+* Creates jobs for retrieving artists and records info, which are received by **Job Router**.
 * Creates jobs status.
-* Updates jobs status when finished.
-* When job finishes, this service send info to **Storage Manager**.
+
+### Job Router
+
+[Repo](https://git.windmaker.net/musicmanager/Job-Router)
+
+* Routes jobs to wrappers.
+* If wrappers does not find required info, job is routed to the next configured wrapper.
+* When there are no more wrappers to route jobs, this service sends info to **Storage Manager**.
+* When there are no more wrappers to route jobs, this service send final job status to **Status Manager**.
+
+### Metal Archives Wrapper
+
+[Repo](https://git.windmaker.net/musicmanager/metal-archives-wrapper)
+
+This service retrieves Artists and Records info from [Metal Archives](https://www.metal-archives.com/)
+
+With or without info, state is returned to **Job Router**.
+
+### Musicbrainz Wrapper
+
+[Repo](https://git.windmaker.net/musicmanager/Musicbrainz-Wrapper)
+
+This service retrieves Artists and Records from [MusicBrainz](https://musicbrainz.org/)
+
+With or without info, state is returned to **Job Router**.
 
 ### Storage Manager
 
