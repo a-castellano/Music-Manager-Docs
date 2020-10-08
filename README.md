@@ -93,6 +93,12 @@ With or without info, state is returned to **Job Router**.
 
 This service stores and updates Artists, Albums and Jobs info.
 
+## Storage Wrapper
+
+[Repo](https://git.windmaker.net/musicmanager/storage-wrapper)
+
+This service retrieves info from Music Info Storage.
+
 ## Common Libraries
 
 Some microservices will use the same data types for their communications, instead of duplicating code, shared libraries will be used.
