@@ -6,7 +6,7 @@
 
 The aim of this project is to help me in order to manage my music collection.
 
-Also, I want to split this project in different microsrvices in order to improve my knowledge about them and Kubernetes architecture.
+Also, I want to split this project in different microsrvices in order to improve my knowledge about them and microsrvices architecture.
 
 ## Service Intercomunication
 
@@ -93,11 +93,24 @@ With or without info, state is returned to **Job Router**.
 
 This service stores and updates Artists, Albums and Jobs info.
 
-## Storage Wrapper
+### Storage Wrapper
 
 [Repo](https://git.windmaker.net/musicmanager/storage-wrapper)
 
 This service retrieves info from Music Info Storage.
+
+### Status Manager
+
+[Repo](https://git.windmaker.net/musicmanager/status-manager)
+
+This service stores and updates jobs statuses.
+
+### Status Wrapper
+
+[Repo](https://git.windmaker.net/musicmanager/status-wrapper)
+
+This service retireves jobs statuses.
+
 
 ## Common Libraries
 
