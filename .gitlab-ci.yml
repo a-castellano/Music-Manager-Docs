@@ -7,7 +7,8 @@ pages:
   script:
   - cd docs
   - hugo --gc --minify -s .
+  - mv public ../
   artifacts:
     paths:
-    - docs/public
+    - public
 
