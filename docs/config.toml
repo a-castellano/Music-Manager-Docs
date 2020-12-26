@@ -1,4 +1,4 @@
-baseURL = "https://musicmanager.gitpages.windmaker.net/music-manager-docs/"
+baseURL = "https://musicmanager.gitpages.windmaker.net/Music-Manager-Docs/"
 languageCode = "en-us"
 title = "Music Manager Docs"
 theme = "hugo-geekdoc"
