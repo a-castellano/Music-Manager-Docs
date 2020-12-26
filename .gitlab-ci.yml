@@ -5,6 +5,7 @@ pages:
   stage: deploy
   image: daedalusproject/base_hugo:202012092044
   script:
+  - cd docs
   - hugo --gc --minify -s .
   artifacts:
     paths:
