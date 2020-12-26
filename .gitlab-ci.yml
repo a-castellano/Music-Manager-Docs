@@ -9,5 +9,5 @@ pages:
   - hugo --gc --minify -s .
   artifacts:
     paths:
-    - public
+    - docs/public
 
