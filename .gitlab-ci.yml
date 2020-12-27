@@ -1,0 +1,15 @@
+stages:
+    - deploy
+
+pages:
+  stage: deploy
+  image: daedalusproject/base_hugo:202012092044
+  script:
+  - cd docs
+  - hugo --gc --minify -s .
+  - mv public ../
+  artifacts:
+    paths:
+    - public
+  only:
+    - /^master$/
