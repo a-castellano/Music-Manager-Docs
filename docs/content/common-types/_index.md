@@ -60,3 +60,61 @@ type Record struct {
 	Tracks []Track
 }
 ```
+
+## Track
+
+This type store Tracks info:
+```go
+type Track struct {
+	Name    string
+	Hours   int
+	Minutes int
+	Seconds int
+}
+```
+
+## Info retrieval
+
+Info retrieval jobs uses the same type:
+```gotype InfoRetrievalType int
+
+const (
+	ArtistName InfoRetrievalType = 1 << iota
+	ArtistData
+	AlbumName
+	AlbumData
+	AlbumWithArtistData
+)
+
+type InfoRetrieval struct {
+	Type   InfoRetrievalType
+	Data   []byte
+	Artist string
+	Album  string
+}
+```
+## Job
+
+All jobs, no matter its type, use this common type. 
+```go
+type JobType int
+
+const (
+	ArtistInfoRetrieval JobType = 1 << iota
+	RecordInfoRetrieval
+	JobInfoRetrieval
+	Die
+)
+
+type Job struct {
+	ID         int
+	Finished   bool
+	Status     bool
+	Type       JobType
+	LastOrigin string
+	Data       []byte
+	Result     []byte
+	Error      string
+}
+
+```
