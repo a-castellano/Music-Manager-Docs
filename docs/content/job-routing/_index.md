@@ -25,4 +25,6 @@ Job_Router -- Not found at metal archives - Look for info --> Music_Brainz_Wrapp
 Music_Brainz_Wrapper -- Returns retrieved info or failed state--> Job_Router;
 {{< /mermaid >}}
 
+If **RequiredOrigin** has a value, **Job Router** will send the job only to required Origin and it won't be re-routed.
+
 Finnaly, **Job Router** will send final to **Status Manager** and required information data to **Storage Manager** if exists.
