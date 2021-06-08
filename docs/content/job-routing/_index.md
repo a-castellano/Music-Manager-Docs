@@ -14,6 +14,8 @@ For each job received by **Job Router**, this service routes it depending of **L
 
 The value of **LastOrigin** is changed by the service who process it.
 
+When jobs finish their status is sended to **Status Manager**, only if status is successful retrieved data is sended to **Storage Manager**
+
 Job Routing behaviour:
 
 {{<mermaid align="left">}}
@@ -23,6 +25,8 @@ Job_Router -- Route job --> Metal_Archives_Wrapper[Metal archives wrapper];
 Metal_Archives_Wrapper -- Returns retrieved info or failed state--> Job_Router;
 Job_Router -- Not found at metal archives - Look for info --> Music_Brainz_Wrapper[Music Brainz wrapper];
 Music_Brainz_Wrapper -- Returns retrieved info or failed state--> Job_Router;
+Job_Router -- Store result --> Storage_Manager[Storage Manager];
+Job_Router -- Update status --> Status_Manager[Status Manager];
 {{< /mermaid >}}
 
 If **RequiredOrigin** has a value, **Job Router** will send the job only to required Origin and it won't be re-routed.
