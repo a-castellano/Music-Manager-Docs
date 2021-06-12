@@ -14,7 +14,7 @@ For each job received by **Job Router**, this service routes it depending of **L
 
 The value of **LastOrigin** is changed by the service who process it.
 
-When jobs finish their status is sended to **Status Manager**, only if status is successful retrieved data is sended to **Storage Manager**
+When jobs finish their status is sended to **Status Manager**, only if status is successful retrieved data is sended to **Storage Manager**.
 
 Job Routing behaviour:
 
