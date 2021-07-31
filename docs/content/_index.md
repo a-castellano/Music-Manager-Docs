@@ -106,3 +106,9 @@ Some microservices will use the same data types for their communications, instea
 [Repo](https://git.windmaker.net/musicmanager/Common-Types)
 
 Common types used by Music Manager microservices ecosystem.
+
+### Storage Repository
+
+[Repo](https://git.windmaker.net/musicmanager/Storage-Repository)
+
+Storage repository used by multiple Music Manager services.
